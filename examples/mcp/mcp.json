@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "efatura": {
+      "url": "https://efatura-api.efatura-api.workers.dev/mcp",
+      "headers": { "Authorization": "Bearer ANAHTARINIZ" }
+    }
+  }
+}

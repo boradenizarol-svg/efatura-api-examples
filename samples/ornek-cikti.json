@@ -1,0 +1,167 @@
+{
+  "invoice": {
+    "invoiceNumber": "ORN2026000000042",
+    "ettn": "3f2b8c1e-7a4d-4e9b-9c21-5d6e8f0a1b2c",
+    "profile": "TICARIFATURA",
+    "type": "SATIS",
+    "issueDate": "2026-11-20",
+    "issueTime": "14:30:00",
+    "currency": "TRY",
+    "notes": [
+      "Yalnız dört bin altı yüz seksen TL'dir."
+    ],
+    "supplier": {
+      "name": "Örnek Yazılım A.Ş.",
+      "taxId": "1234567890",
+      "taxIdType": "VKN",
+      "taxOffice": "Kadıköy",
+      "city": "İstanbul",
+      "country": "Türkiye"
+    },
+    "customer": {
+      "name": "Deneme Ticaret Ltd. Şti.",
+      "taxId": "9876543217",
+      "taxIdType": "VKN",
+      "taxOffice": "Çankaya",
+      "city": "Ankara",
+      "country": "Türkiye"
+    },
+    "lines": [
+      {
+        "id": "1",
+        "name": "Yazılım lisansı (yıllık)",
+        "quantity": 2,
+        "unitCode": "C62",
+        "unitPrice": 1500,
+        "allowance": 0,
+        "charge": 0,
+        "lineTotal": 3000,
+        "taxes": [
+          {
+            "type": "KDV",
+            "code": "0015",
+            "percent": 20,
+            "taxableAmount": 3000,
+            "amount": 600
+          }
+        ]
+      },
+      {
+        "id": "2",
+        "name": "Kurulum hizmeti",
+        "quantity": 1,
+        "unitCode": "C62",
+        "unitPrice": 1000,
+        "allowance": 100,
+        "charge": 0,
+        "lineTotal": 900,
+        "taxes": [
+          {
+            "type": "KDV",
+            "code": "0015",
+            "percent": 20,
+            "taxableAmount": 900,
+            "amount": 180
+          }
+        ]
+      }
+    ],
+    "taxes": [
+      {
+        "type": "KDV",
+        "code": "0015",
+        "percent": 20,
+        "taxableAmount": 3900,
+        "amount": 780
+      }
+    ],
+    "withholdings": [],
+    "totals": {
+      "lineExtension": 3900,
+      "allowance": 100,
+      "charge": null,
+      "taxExclusive": 3900,
+      "taxInclusive": 4680,
+      "totalTax": 780,
+      "totalWithholding": null,
+      "payableRounding": null,
+      "payable": 4680
+    }
+  },
+  "checks": [
+    {
+      "check": "invoice_number_format",
+      "ok": true,
+      "message": "Fatura numarası GİB formatında.",
+      "actual": "ORN2026000000042"
+    },
+    {
+      "check": "ettn_format",
+      "ok": true,
+      "message": "ETTN geçerli UUID.",
+      "actual": "3f2b8c1e-7a4d-4e9b-9c21-5d6e8f0a1b2c"
+    },
+    {
+      "check": "supplier_tax_id",
+      "ok": true,
+      "message": "supplier VKN kontrol hanesi doğru.",
+      "actual": "1234567890"
+    },
+    {
+      "check": "customer_tax_id",
+      "ok": true,
+      "message": "customer VKN kontrol hanesi doğru.",
+      "actual": "9876543217"
+    },
+    {
+      "check": "line_1_total",
+      "ok": true,
+      "message": "Satır 1 tutarı tutarlı.",
+      "expected": 3000,
+      "actual": 3000
+    },
+    {
+      "check": "line_2_total",
+      "ok": true,
+      "message": "Satır 2 tutarı tutarlı.",
+      "expected": 900,
+      "actual": 900
+    },
+    {
+      "check": "lines_sum",
+      "ok": true,
+      "message": "Satır toplamı tutarlı.",
+      "expected": 3900,
+      "actual": 3900
+    },
+    {
+      "check": "tax_exclusive",
+      "ok": true,
+      "message": "Vergiler hariç tutar tutarlı.",
+      "expected": 3900,
+      "actual": 3900
+    },
+    {
+      "check": "tax_0015_20",
+      "ok": true,
+      "message": "%20 KDV tutarı tutarlı.",
+      "expected": 780,
+      "actual": 780
+    },
+    {
+      "check": "tax_inclusive",
+      "ok": true,
+      "message": "Vergiler dahil tutar tutarlı.",
+      "expected": 4680,
+      "actual": 4680
+    },
+    {
+      "check": "payable",
+      "ok": true,
+      "message": "Ödenecek tutar tutarlı.",
+      "expected": 4680,
+      "actual": 4680
+    }
+  ],
+  "allChecksPassed": true
+}

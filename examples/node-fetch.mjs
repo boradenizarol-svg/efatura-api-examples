@@ -25,5 +25,7 @@ if (!res.ok) {
 const { invoice, checks, allChecksPassed } = await res.json();
 console.log(`${invoice.invoiceNumber} | ${invoice.supplier.name} -> ${invoice.customer.name}`);
 console.log(`Ödenecek: ${invoice.totals.payable} ${invoice.currency}`);
-console.log(`Kontroller: ${allChecksPassed ? "hepsi geçti" : checks.filter((c) => !c.ok).map((c) => c.message).join("; ")}`);
+// severity: error | warning | info — bilgi notları (info) sorun sayılmaz
+const problems = checks.filter((c) => !c.ok && c.severity !== "info").map((c) => `[${c.severity}] ${c.message}`);
+console.log(`Kontroller: ${allChecksPassed ? "hepsi geçti" : problems.join("; ")}`);
 console.log(`Kalan kredi: ${res.headers.get("x-credits-remaining")}`);

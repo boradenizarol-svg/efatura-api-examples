@@ -1,6 +1,6 @@
 # e-Fatura API — örnekler / examples
 
-**Türk e-Fatura ve e-Arşiv XML'ini (GİB UBL-TR) tek istekte JSON'a çeviren ve kontrol eden API.** REST, MCP sunucusu (Claude ve diğer ajanlar) ve x402 ile istek başına ödeme.
+**e-Fatura ve e-Arşiv dosyalarını (GİB UBL-TR XML) otomatik okuyan ve hatalarını yakalayan API.** Sonucu yazılımınızın doğrudan kullanabileceği JSON olarak verir. REST, MCP sunucusu (Claude ve diğer ajanlar) ve x402 ile istek başına ödeme.
 
 **Turkish e-invoice (GİB UBL-TR) parser API** for developers and AI agents — REST, MCP server and x402 pay-per-call.
 
@@ -11,10 +11,10 @@
 
 ## Ne yapar?
 
-- **Okur:** fatura no, ETTN, tarih, satıcı/alıcı (unvan, VKN/TCKN, vergi dairesi), kalemler, KDV, ÖTV, tevkifat, toplamlar
-- **Kontrol eder:** VKN/TCKN kontrol hanesi, fatura no ve ETTN biçimi, satır / KDV / vergiler dahil / ödenecek tutar hesapları
+- **Okur:** fatura no, ETTN, tarih; satıcı, alıcı ve ihracatta asıl alıcı (unvan, VKN/TCKN, vergi dairesi, MERSİS gibi diğer kimlikler, adres, iletişim); kalemler (stok kodu, sınıf kodu, marka/model, satır tevkifatı); KDV, ÖTV, tevkifat ve istisna kodları; toplamlar; IBAN, vade ve ödeme koşulu; iade edilen fatura, sipariş, irsaliye ve fatura dönemi
+- **Kontrol eder:** VKN/TCKN ve IBAN kontrol haneleri, fatura no, ETTN ve tarih biçimi, satır / KDV / vergiler dahil / ödenecek tutar hesapları, satır KDV'si ile belge KDV'sinin uyumu, KDV oranı, %0 KDV'de istisna kodu, tevkifat ve iade bilgisi, dövizli faturada kur
 - **Saklamaz:** fatura okunur ve unutulur; hatalı okumalar ücretsizdir
-- **Destekler:** TEMELFATURA, TICARIFATURA, EARSIVFATURA, IHRACAT, TEVKIFAT, ISTISNA, IADE, OZELMATRAH, HKS, YATIRIMTESVIK; GİB zarfı; UTF-8 ve Windows-1254; en fazla 2 MB
+- **Destekler:** TEMELFATURA, TICARIFATURA, EARSIVFATURA, IHRACAT, TEVKIFAT, ISTISNA, IADE, OZELMATRAH, HKS, YATIRIMTESVIK; GİB zarfı; UTF-8, UTF-16 ve Windows-1254; en fazla 2 MB
 
 Örnek girdi: [`samples/ornek-fatura.xml`](samples/ornek-fatura.xml) (uydurma veri) → çıktı: [`samples/ornek-cikti.json`](samples/ornek-cikti.json)
 
@@ -66,16 +66,34 @@ claude mcp add --transport http efatura https://efaturaoku.site/mcp --header "Au
     "withholdings": [],
     "totals": { "taxExclusive": 3900, "taxInclusive": 4680, "payable": 4680 }
   },
-  "checks": [{ "check": "payable", "ok": true, "message": "Ödenecek tutar tutarlı." }],
-  "allChecksPassed": true
+  "checks": [
+    { "check": "payable", "ok": true, "severity": "error", "message": "Ödenecek tutar tutarlı." },
+    { "check": "kdv_rate_18", "ok": false, "severity": "info", "message": "%18 eski bir KDV oranı (10.07.2023'ten beri %20)." }
+  ],
+  "allChecksPassed": true,
+  "issues": { "error": 0, "warning": 0, "info": 1 }
 }
 ```
+
+Tam çıktı: [`samples/ornek-cikti.json`](samples/ornek-cikti.json).
+
+### Kontrollerin önem derecesi
+
+Her kontrolde `severity` vardır; kontrol başarısız olursa ne kadar ciddi olduğunu söyler:
+
+| severity | Anlamı |
+|---|---|
+| `error` | Tutarlar ya da kimlik numaraları tutmuyor; fatura büyük olasılıkla hatalı |
+| `warning` | Kurallara aykırı görünen ya da eksik bir bilgi var (ör. %0 KDV'de istisna kodu yok) |
+| `info` | Bilgi notu; meşru olabilir (ör. eski tarihli bir sözleşmede %18 KDV) |
+
+`allChecksPassed`, hata ya da uyarı yoksa `true` olur; bilgi notları sonucu etkilemez. `issues` başarısız kontrolleri derecesine göre sayar.
 
 Hata kodları: `401` anahtar yok/geçersiz · `402` kredi bitti ya da x402 ödemesi gerekli · `413` 2 MB üstü · `422` UBL-TR fatura değil (ücret alınmaz).
 
 ## English
 
-e-Fatura API parses Turkish e-invoices (GİB UBL-TR 1.2 XML — e-Fatura and e-Arşiv, also inside GİB envelopes) into structured JSON and validates them: VKN/TCKN checksums, invoice number and ETTN format, line, VAT (KDV), withholding (tevkifat) and payable totals. Use it over REST, as an MCP server for Claude and other agents, or pay per call with x402 (USDC on Base). $0.01 per successfully parsed invoice; invoices are never stored.
+e-Fatura API parses Turkish e-invoices (GİB UBL-TR 1.2 XML — e-Fatura and e-Arşiv, also inside GİB envelopes) into structured JSON (parties with addresses and identifiers, lines with item codes, taxes with exemption codes, payment means/IBAN, return and order references) and validates them: VKN/TCKN and IBAN checksums, invoice number, ETTN and date format, line, VAT (KDV), withholding (tevkifat) and payable totals, VAT rates and exemption codes. Every check has a `severity` (`error`, `warning`, `info`); `allChecksPassed` ignores info notes. Use it over REST, as an MCP server for Claude and other agents, or pay per call with x402 (USDC on Base). $0.01 per successfully parsed invoice; invoices are never stored.
 
 ## Lisans
 

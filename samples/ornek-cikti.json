@@ -16,7 +16,31 @@
       "taxIdType": "VKN",
       "taxOffice": "Kadıköy",
       "city": "İstanbul",
-      "country": "Türkiye"
+      "country": "Türkiye",
+      "identifiers": [
+        {
+          "scheme": "VKN",
+          "id": "1234567890"
+        },
+        {
+          "scheme": "MERSISNO",
+          "id": "0123456789000015"
+        }
+      ],
+      "address": {
+        "street": null,
+        "buildingNumber": null,
+        "district": "Kadıköy",
+        "city": "İstanbul",
+        "postalCode": null,
+        "country": "Türkiye"
+      },
+      "contact": {
+        "phone": null,
+        "fax": null,
+        "email": null
+      },
+      "website": null
     },
     "customer": {
       "name": "Deneme Ticaret Ltd. Şti.",
@@ -24,7 +48,27 @@
       "taxIdType": "VKN",
       "taxOffice": "Çankaya",
       "city": "Ankara",
-      "country": "Türkiye"
+      "country": "Türkiye",
+      "identifiers": [
+        {
+          "scheme": "VKN",
+          "id": "9876543217"
+        }
+      ],
+      "address": {
+        "street": null,
+        "buildingNumber": null,
+        "district": null,
+        "city": "Ankara",
+        "postalCode": null,
+        "country": "Türkiye"
+      },
+      "contact": {
+        "phone": null,
+        "fax": null,
+        "email": null
+      },
+      "website": null
     },
     "lines": [
       {
@@ -42,9 +86,21 @@
             "code": "0015",
             "percent": 20,
             "taxableAmount": 3000,
-            "amount": 600
+            "amount": 600,
+            "exemptionCode": null,
+            "exemptionReason": null,
+            "perUnitAmount": null
           }
-        ]
+        ],
+        "withholdings": [],
+        "description": null,
+        "sellerItemCode": null,
+        "buyerItemCode": null,
+        "manufacturerItemCode": null,
+        "classificationCodes": [],
+        "brand": null,
+        "model": null,
+        "notes": []
       },
       {
         "id": "2",
@@ -61,9 +117,21 @@
             "code": "0015",
             "percent": 20,
             "taxableAmount": 900,
-            "amount": 180
+            "amount": 180,
+            "exemptionCode": null,
+            "exemptionReason": null,
+            "perUnitAmount": null
           }
-        ]
+        ],
+        "withholdings": [],
+        "description": null,
+        "sellerItemCode": null,
+        "buyerItemCode": null,
+        "manufacturerItemCode": null,
+        "classificationCodes": [],
+        "brand": null,
+        "model": null,
+        "notes": []
       }
     ],
     "taxes": [
@@ -72,10 +140,26 @@
         "code": "0015",
         "percent": 20,
         "taxableAmount": 3900,
-        "amount": 780
+        "amount": 780,
+        "exemptionCode": null,
+        "exemptionReason": null,
+        "perUnitAmount": null
       }
     ],
     "withholdings": [],
+    "exchangeRate": null,
+    "ublVersion": "2.1",
+    "customization": "TR1.2",
+    "copyIndicator": false,
+    "declaredLineCount": 2,
+    "invoicePeriod": null,
+    "orderReference": null,
+    "billingReferences": [],
+    "despatchReferences": [],
+    "additionalDocuments": [],
+    "paymentMeans": [],
+    "paymentTerms": null,
+    "buyer": null,
     "totals": {
       "lineExtension": 3900,
       "allowance": 100,
@@ -92,30 +176,55 @@
     {
       "check": "invoice_number_format",
       "ok": true,
+      "severity": "error",
       "message": "Fatura numarası GİB formatında.",
       "actual": "ORN2026000000042"
     },
     {
       "check": "ettn_format",
       "ok": true,
-      "message": "ETTN geçerli UUID.",
+      "severity": "error",
+      "message": "ETTN biçimi doğru.",
       "actual": "3f2b8c1e-7a4d-4e9b-9c21-5d6e8f0a1b2c"
+    },
+    {
+      "check": "issue_date",
+      "ok": true,
+      "severity": "warning",
+      "message": "Fatura tarihi geçerli."
     },
     {
       "check": "supplier_tax_id",
       "ok": true,
-      "message": "supplier VKN kontrol hanesi doğru.",
+      "severity": "error",
+      "message": "Satıcı VKN numarası geçerli.",
       "actual": "1234567890"
     },
     {
       "check": "customer_tax_id",
       "ok": true,
-      "message": "customer VKN kontrol hanesi doğru.",
+      "severity": "error",
+      "message": "Alıcı VKN numarası geçerli.",
       "actual": "9876543217"
+    },
+    {
+      "check": "line_count",
+      "ok": true,
+      "severity": "warning",
+      "message": "Kalem sayısı tutarlı.",
+      "expected": 2,
+      "actual": 2
+    },
+    {
+      "check": "line_ids_unique",
+      "ok": true,
+      "severity": "warning",
+      "message": "Satır numaraları benzersiz."
     },
     {
       "check": "line_1_total",
       "ok": true,
+      "severity": "error",
       "message": "Satır 1 tutarı tutarlı.",
       "expected": 3000,
       "actual": 3000
@@ -123,13 +232,21 @@
     {
       "check": "line_2_total",
       "ok": true,
+      "severity": "error",
       "message": "Satır 2 tutarı tutarlı.",
       "expected": 900,
       "actual": 900
     },
     {
+      "check": "line_taxes",
+      "ok": true,
+      "severity": "error",
+      "message": "Satır vergileri tutarlı."
+    },
+    {
       "check": "lines_sum",
       "ok": true,
+      "severity": "error",
       "message": "Satır toplamı tutarlı.",
       "expected": 3900,
       "actual": 3900
@@ -137,6 +254,7 @@
     {
       "check": "tax_exclusive",
       "ok": true,
+      "severity": "error",
       "message": "Vergiler hariç tutar tutarlı.",
       "expected": 3900,
       "actual": 3900
@@ -144,13 +262,21 @@
     {
       "check": "tax_0015_20",
       "ok": true,
+      "severity": "error",
       "message": "%20 KDV tutarı tutarlı.",
       "expected": 780,
       "actual": 780
     },
     {
+      "check": "kdv_rate_20",
+      "ok": true,
+      "severity": "warning",
+      "message": "%20 geçerli bir KDV oranı."
+    },
+    {
       "check": "tax_inclusive",
       "ok": true,
+      "severity": "error",
       "message": "Vergiler dahil tutar tutarlı.",
       "expected": 4680,
       "actual": 4680
@@ -158,10 +284,16 @@
     {
       "check": "payable",
       "ok": true,
+      "severity": "error",
       "message": "Ödenecek tutar tutarlı.",
       "expected": 4680,
       "actual": 4680
     }
   ],
-  "allChecksPassed": true
+  "allChecksPassed": true,
+  "issues": {
+    "error": 0,
+    "warning": 0,
+    "info": 0
+  }
 }

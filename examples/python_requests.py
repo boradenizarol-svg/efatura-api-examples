@@ -29,6 +29,7 @@ body = res.json()
 inv = body["invoice"]
 print(f"{inv['invoiceNumber']} | {inv['supplier']['name']} -> {inv['customer']['name']}")
 print(f"Ödenecek: {inv['totals']['payable']} {inv['currency']}")
-failed = [c["message"] for c in body["checks"] if not c["ok"]]
+# severity: error | warning | info — bilgi notları (info) sorun sayılmaz
+failed = [f"[{c['severity']}] {c['message']}" for c in body["checks"] if not c["ok"] and c.get("severity") != "info"]
 print("Kontroller:", "hepsi geçti" if body["allChecksPassed"] else "; ".join(failed))
 print("Kalan kredi:", res.headers.get("X-Credits-Remaining"))

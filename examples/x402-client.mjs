@@ -11,7 +11,7 @@ import { privateKeyToAccount } from "viem/accounts";
 import { wrapFetchWithPaymentFromConfig } from "@x402/fetch";
 import { ExactEvmScheme } from "@x402/evm";
 
-const URL_ = "https://efatura-api.efatura-api.workers.dev/v1/parse";
+const URL_ = "https://efaturaoku.site/v1/parse";
 const NETWORK = "eip155:8453"; // Base
 const MAX_AMOUNT = 10000n; // 0,01 USDC (6 ondalık)
 

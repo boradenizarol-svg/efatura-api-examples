@@ -8,7 +8,7 @@ import sys
 
 import requests
 
-API = "https://efatura-api.efatura-api.workers.dev"
+API = "https://efaturaoku.site"
 key = os.environ.get("EFATURA_API_KEY")
 path = sys.argv[1] if len(sys.argv) > 1 else "samples/ornek-fatura.xml"
 if not key:

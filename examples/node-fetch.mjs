@@ -3,7 +3,7 @@
 // PowerShell:  $env:EFATURA_API_KEY="efa_..."; node examples/node-fetch.mjs samples/ornek-fatura.xml
 import { readFile } from "node:fs/promises";
 
-const API = "https://efatura-api.efatura-api.workers.dev";
+const API = "https://efaturaoku.site";
 const key = process.env.EFATURA_API_KEY;
 const file = process.argv[2] ?? "samples/ornek-fatura.xml";
 if (!key) {

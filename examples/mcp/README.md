@@ -1,6 +1,6 @@
 # MCP ile kullanım
 
-Sunucu adresi: `https://efatura-api.efatura-api.workers.dev/mcp` (Streamable HTTP)
+Sunucu adresi: `https://efaturaoku.site/mcp` (Streamable HTTP)
 Resmî MCP kaydı: `io.github.boradenizarol-svg/efatura`
 
 Araçlar:
@@ -10,7 +10,7 @@ Araçlar:
 ## Claude Code
 
 ```bash
-claude mcp add --transport http efatura https://efatura-api.efatura-api.workers.dev/mcp --header "Authorization: Bearer ANAHTARINIZ"
+claude mcp add --transport http efatura https://efaturaoku.site/mcp --header "Authorization: Bearer ANAHTARINIZ"
 ```
 
 ## URL ve başlık destekleyen MCP istemcileri (ör. Cursor)

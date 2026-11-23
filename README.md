@@ -4,7 +4,7 @@
 
 **Turkish e-invoice (GİB UBL-TR) parser API** for developers and AI agents — REST, MCP server and x402 pay-per-call.
 
-🌐 https://efatura-api.efatura-api.workers.dev · 📄 [OpenAPI](https://efatura-api.efatura-api.workers.dev/openapi.json) · 🤖 [llms.txt](https://efatura-api.efatura-api.workers.dev/llms.txt) · 🧪 [Ücretsiz örnek çıktı / free demo](https://efatura-api.efatura-api.workers.dev/v1/demo)
+🌐 https://efaturaoku.site · 📄 [OpenAPI](https://efaturaoku.site/openapi.json) · 🤖 [llms.txt](https://efaturaoku.site/llms.txt) · 🧪 [Ücretsiz örnek çıktı / free demo](https://efaturaoku.site/v1/demo)
 
 > Bu depo yalnızca kullanım örneklerini içerir. Servisin kendisi barındırılan (hosted) bir API'dir.
 > This repository contains usage examples only; the service itself is a hosted API.
@@ -40,7 +40,7 @@ Fatura başına **$0.01** — yalnızca başarılı okumalar. Abonelik yok.
 ### Hızlı başlangıç (curl)
 
 ```bash
-curl -X POST https://efatura-api.efatura-api.workers.dev/v1/parse \
+curl -X POST https://efaturaoku.site/v1/parse \
   -H "Authorization: Bearer ANAHTARINIZ" \
   -H "Content-Type: application/xml" \
   --data-binary @samples/ornek-fatura.xml
@@ -49,7 +49,7 @@ curl -X POST https://efatura-api.efatura-api.workers.dev/v1/parse \
 ### Claude Code (MCP)
 
 ```bash
-claude mcp add --transport http efatura https://efatura-api.efatura-api.workers.dev/mcp --header "Authorization: Bearer ANAHTARINIZ"
+claude mcp add --transport http efatura https://efaturaoku.site/mcp --header "Authorization: Bearer ANAHTARINIZ"
 ```
 
 ## Yanıt / Response

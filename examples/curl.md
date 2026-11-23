@@ -1,11 +1,11 @@
 # curl ile kullanım
 
-Taban adres: `https://efatura-api.efatura-api.workers.dev`
+Taban adres: `https://efaturaoku.site`
 
 ## Ücretsiz örnek çıktı
 
 ```bash
-curl https://efatura-api.efatura-api.workers.dev/v1/demo
+curl https://efaturaoku.site/v1/demo
 ```
 
 ## Fatura okuma (API anahtarı)
@@ -13,7 +13,7 @@ curl https://efatura-api.efatura-api.workers.dev/v1/demo
 Ham XML gönderin (UTF-8 ve Windows-1254 desteklenir):
 
 ```bash
-curl -X POST https://efatura-api.efatura-api.workers.dev/v1/parse \
+curl -X POST https://efaturaoku.site/v1/parse \
   -H "Authorization: Bearer ANAHTARINIZ" \
   -H "Content-Type: application/xml" \
   --data-binary @samples/ornek-fatura.xml
@@ -22,7 +22,7 @@ curl -X POST https://efatura-api.efatura-api.workers.dev/v1/parse \
 Ya da JSON içinde:
 
 ```bash
-curl -X POST https://efatura-api.efatura-api.workers.dev/v1/parse \
+curl -X POST https://efaturaoku.site/v1/parse \
   -H "Authorization: Bearer ANAHTARINIZ" \
   -H "Content-Type: application/json" \
   -d '{"xmlBase64": "'"$(base64 -w0 samples/ornek-fatura.xml)"'"}'
@@ -33,7 +33,7 @@ Yanıt başlığındaki `X-Credits-Remaining` kalan krediyi gösterir.
 ## Kalan kredi
 
 ```bash
-curl https://efatura-api.efatura-api.workers.dev/v1/credits -H "Authorization: Bearer ANAHTARINIZ"
+curl https://efaturaoku.site/v1/credits -H "Authorization: Bearer ANAHTARINIZ"
 ```
 
 ## Anahtarsız istek (x402)

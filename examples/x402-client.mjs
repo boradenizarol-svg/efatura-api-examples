@@ -1,4 +1,4 @@
-// e-Fatura API — x402 ile hesapsız, istek başına ödeme (Base ağında USDC).
+// e-Fatura Oku — x402 ile hesapsız, istek başına ödeme (Base ağında USDC).
 // Yapay zeka ajanları için: kayıt yok, API anahtarı yok; her başarılı fatura 0,01 USDC.
 //
 // Kurulum:   npm i @x402/fetch @x402/evm viem

@@ -5,14 +5,16 @@ Resmî MCP kaydı: `io.github.boradenizarol-svg/efatura`
 
 Araçlar:
 - `efatura_demo` — ücretsiz, örnek çıktı
-- `parse_efatura` — ücretli (fatura başına $0.01), `Authorization: Bearer <anahtar>` başlığı gerekir
+- `parse_efatura` — ücret almaz; kendi faturanızı x402 ile nasıl okutacağınızı anlatır (`POST /v1/parse`)
+
+Kendi faturalarınızı okutmak için ajanınızın x402 destekli bir HTTP istemcisi olmalı; bkz. [`../x402-client.mjs`](../x402-client.mjs).
 
 ## Claude Code
 
 ```bash
-claude mcp add --transport http efatura https://efaturaoku.site/mcp --header "Authorization: Bearer ANAHTARINIZ"
+claude mcp add --transport http efatura https://efaturaoku.site/mcp
 ```
 
-## URL ve başlık destekleyen MCP istemcileri (ör. Cursor)
+## URL destekleyen MCP istemcileri (ör. Cursor)
 
 [`mcp.json`](mcp.json) dosyasındaki yapıyı istemcinizin MCP ayarlarına ekleyin.

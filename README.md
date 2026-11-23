@@ -1,13 +1,13 @@
-# e-Fatura API — örnekler / examples
+# e-Fatura Oku — örnekler / examples
 
-**e-Fatura ve e-Arşiv dosyalarını (GİB UBL-TR XML) otomatik okuyan ve hatalarını yakalayan API.** Sonucu yazılımınızın doğrudan kullanabileceği JSON olarak verir. REST, MCP sunucusu (Claude ve diğer ajanlar) ve x402 ile istek başına ödeme.
+**e-Fatura ve e-Arşiv dosyalarını (GİB UBL-TR XML) okuyan ve hatalarını yakalayan servis.** İnsanlar için ücretsiz web görüntüleyici; yazılımlar ve yapay zeka ajanları için **x402 ile istek başına** ücretli okuma (hesap ve API anahtarı yok).
 
-**Turkish e-invoice (GİB UBL-TR) parser API** for developers and AI agents — REST, MCP server and x402 pay-per-call.
+**Turkish e-invoice (GİB UBL-TR) parser** — free web viewer for people, x402 pay-per-call for software and AI agents (no account, no API key).
 
-🌐 https://efaturaoku.site · 📄 [OpenAPI](https://efaturaoku.site/openapi.json) · 🤖 [llms.txt](https://efaturaoku.site/llms.txt) · 🧪 [Ücretsiz örnek çıktı / free demo](https://efaturaoku.site/v1/demo)
+🌐 https://efaturaoku.site · 👩‍💻 [Geliştiriciler](https://efaturaoku.site/gelistiriciler) · 📄 [OpenAPI](https://efaturaoku.site/openapi.json) · 🤖 [llms.txt](https://efaturaoku.site/llms.txt) · 🧪 [Ücretsiz örnek çıktı / free demo](https://efaturaoku.site/v1/demo)
 
-> Bu depo yalnızca kullanım örneklerini içerir. Servisin kendisi barındırılan (hosted) bir API'dir.
-> This repository contains usage examples only; the service itself is a hosted API.
+> Bu depo yalnızca kullanım örneklerini içerir. Servisin kendisi barındırılan (hosted) bir hizmettir.
+> This repository contains usage examples only; the service itself is hosted.
 
 ## Ne yapar?
 
@@ -20,37 +20,26 @@
 
 ## Fiyat / Pricing
 
-Fatura başına **$0.01** — yalnızca başarılı okumalar. Abonelik yok.
+Başarıyla okunan fatura başına **$0.01**, **x402** ile Base ağında USDC olarak otomatik ödenir. Hesap, API anahtarı ya da abonelik yok; okunamayan dosyalar ücretsizdir.
 
-| Yol | Nasıl |
-|---|---|
-| **x402** | Hesap ve anahtar yok; her istek Base ağında 0,01 USDC ile otomatik ödenir. Ajanlar için ideal. |
-| **API anahtarı** | Ön ödemeli kredi, `Authorization: Bearer <anahtar>` |
+Tek tük fatura için koda gerek yok: [efaturaoku.site](https://efaturaoku.site) üzerindeki görüntüleyici ücretsizdir ve dosya bilgisayarınızdan çıkmaz.
 
 ## Örnekler
 
 | Dosya | Açıklama |
 |---|---|
-| [`examples/curl.md`](examples/curl.md) | curl ile REST |
-| [`examples/node-fetch.mjs`](examples/node-fetch.mjs) | Node.js, API anahtarı |
-| [`examples/python_requests.py`](examples/python_requests.py) | Python, API anahtarı |
-| [`examples/x402-client.mjs`](examples/x402-client.mjs) | Node.js, x402 ile hesapsız ödeme |
-| [`examples/mcp/`](examples/mcp/) | Claude Code ve diğer MCP istemcileri |
+| [`examples/x402-client.mjs`](examples/x402-client.mjs) | Node.js, x402 ile istek başına ödeme |
+| [`examples/curl.md`](examples/curl.md) | curl ile ücretsiz örnek ve 402 ödeme talimatı |
+| [`examples/mcp/`](examples/mcp/) | Claude Code ve diğer MCP istemcileri (ücretsiz örnek aracı) |
 
-### Hızlı başlangıç (curl)
+### Hızlı başlangıç (Node.js, x402)
 
 ```bash
-curl -X POST https://efaturaoku.site/v1/parse \
-  -H "Authorization: Bearer ANAHTARINIZ" \
-  -H "Content-Type: application/xml" \
-  --data-binary @samples/ornek-fatura.xml
+npm i @x402/fetch @x402/evm viem
+PRIVATE_KEY=0x... node examples/x402-client.mjs samples/ornek-fatura.xml
 ```
 
-### Claude Code (MCP)
-
-```bash
-claude mcp add --transport http efatura https://efaturaoku.site/mcp --header "Authorization: Bearer ANAHTARINIZ"
-```
+Cüzdana yalnızca küçük tutarlar koyun; örnek, servis 0,01 USDC'den fazlasını isterse ödeme yapmaz.
 
 ## Yanıt / Response
 
@@ -89,11 +78,11 @@ Her kontrolde `severity` vardır; kontrol başarısız olursa ne kadar ciddi old
 
 `allChecksPassed`, hata ya da uyarı yoksa `true` olur; bilgi notları sonucu etkilemez. `issues` başarısız kontrolleri derecesine göre sayar.
 
-Hata kodları: `401` anahtar yok/geçersiz · `402` kredi bitti ya da x402 ödemesi gerekli · `413` 2 MB üstü · `422` UBL-TR fatura değil (ücret alınmaz).
+Hata kodları: `402` x402 ödemesi gerekli · `413` 2 MB üstü · `422` UBL-TR fatura değil (ücret alınmaz) · `429` çok fazla istek.
 
 ## English
 
-e-Fatura API parses Turkish e-invoices (GİB UBL-TR 1.2 XML — e-Fatura and e-Arşiv, also inside GİB envelopes) into structured JSON (parties with addresses and identifiers, lines with item codes, taxes with exemption codes, payment means/IBAN, return and order references) and validates them: VKN/TCKN and IBAN checksums, invoice number, ETTN and date format, line, VAT (KDV), withholding (tevkifat) and payable totals, VAT rates and exemption codes. Every check has a `severity` (`error`, `warning`, `info`); `allChecksPassed` ignores info notes. Use it over REST, as an MCP server for Claude and other agents, or pay per call with x402 (USDC on Base). $0.01 per successfully parsed invoice; invoices are never stored.
+e-Fatura Oku parses Turkish e-invoices (GİB UBL-TR 1.2 XML — e-Fatura and e-Arşiv, also inside GİB envelopes) into structured JSON (parties with addresses and identifiers, lines with item codes, taxes with exemption codes, payment means/IBAN, return and order references) and validates them: VKN/TCKN and IBAN checksums, invoice number, ETTN and date format, line, VAT (KDV), withholding (tevkifat) and payable totals, VAT rates and exemption codes. Every check has a `severity` (`error`, `warning`, `info`); `allChecksPassed` ignores info notes. Software and AI agents pay per call with x402 (USDC on Base) — no account or API key; people can use the free web viewer at efaturaoku.site. $0.01 per successfully parsed invoice; invoices are never stored.
 
 ## Lisans
 

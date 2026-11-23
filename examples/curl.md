@@ -8,34 +8,16 @@ Taban adres: `https://efaturaoku.site`
 curl https://efaturaoku.site/v1/demo
 ```
 
-## Fatura okuma (API anahtarı)
+## Fatura okuma (x402)
 
-Ham XML gönderin (UTF-8 ve Windows-1254 desteklenir):
+Okuma istek başına ücretlidir ve **x402** ile ödenir; hesap ya da API anahtarı yoktur. Ödemesiz istek, `402 Payment Required` ve `PAYMENT-REQUIRED` başlığında ödeme talimatını döner:
 
 ```bash
-curl -X POST https://efaturaoku.site/v1/parse \
-  -H "Authorization: Bearer ANAHTARINIZ" \
+curl -i -X POST https://efaturaoku.site/v1/parse \
   -H "Content-Type: application/xml" \
   --data-binary @samples/ornek-fatura.xml
 ```
 
-Ya da JSON içinde:
+curl ödeme yapamaz; ödemeyi x402 destekli bir istemci otomatik yapar. Bkz. [`x402-client.mjs`](x402-client.mjs).
 
-```bash
-curl -X POST https://efaturaoku.site/v1/parse \
-  -H "Authorization: Bearer ANAHTARINIZ" \
-  -H "Content-Type: application/json" \
-  -d '{"xmlBase64": "'"$(base64 -w0 samples/ornek-fatura.xml)"'"}'
-```
-
-Yanıt başlığındaki `X-Credits-Remaining` kalan krediyi gösterir.
-
-## Kalan kredi
-
-```bash
-curl https://efaturaoku.site/v1/credits -H "Authorization: Bearer ANAHTARINIZ"
-```
-
-## Anahtarsız istek (x402)
-
-Anahtar göndermezseniz servis `402 Payment Required` ve `PAYMENT-REQUIRED` başlığında x402 ödeme talimatını döner. x402 istemcileri bunu otomatik öder; bkz. [`x402-client.mjs`](x402-client.mjs).
+Gövde ham XML (UTF-8, UTF-16 ve Windows-1254 desteklenir) ya da JSON olabilir: `{"xml": "..."}` veya `{"xmlBase64": "..."}`.

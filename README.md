@@ -24,6 +24,16 @@ Başarıyla okunan fatura başına **$0.01**, **x402** ile Base ağında USDC ol
 
 Tek tük fatura için koda gerek yok: [efaturaoku.site](https://efaturaoku.site) üzerindeki görüntüleyici ücretsizdir ve dosya bilgisayarınızdan çıkmaz.
 
+## Ücretsiz web araçları
+
+Kod yazmadan, tarayıcıda çalışan araçlar (veriler bilgisayarınızdan çıkmaz):
+
+- [e-Fatura XML görüntüleyici](https://efaturaoku.site/) · [XML'i Excel'e çevirme](https://efaturaoku.site/e-fatura-excel-donusturme) · [e-Arşiv fatura görüntüleme](https://efaturaoku.site/e-arsiv-fatura-goruntuleme)
+- [KDV hesaplama](https://efaturaoku.site/kdv-hesaplama) · [Tevkifat hesaplama](https://efaturaoku.site/tevkifat-hesaplama) · [TCMB döviz kuru hesaplama](https://efaturaoku.site/tcmb-doviz-kuru-hesaplama) · [Tutarı yazıya çevirme](https://efaturaoku.site/tutar-yaziya-cevirme)
+- [VKN / TCKN doğrulama](https://efaturaoku.site/vkn-dogrulama) · [Toplu VKN kontrolü](https://efaturaoku.site/toplu-vkn-kontrol) · [IBAN doğrulama](https://efaturaoku.site/iban-dogrulama)
+- GİB kod listeleri: [KDV istisna kodları](https://efaturaoku.site/kdv-istisna-kodlari) · [Tevkifat kodları ve oranları](https://efaturaoku.site/tevkifat-kodlari) · [Vergi kodları](https://efaturaoku.site/vergi-kodlari) · [Ölçü birimi kodları](https://efaturaoku.site/olcu-birimi-kodlari)
+- Rehberler: [XML fatura nasıl açılır?](https://efaturaoku.site/rehber/xml-fatura-nasil-acilir) · [Gelen e-fatura nasıl kontrol edilir?](https://efaturaoku.site/rehber/gelen-e-fatura-nasil-kontrol-edilir) · [Tüm rehberler](https://efaturaoku.site/rehber)
+
 ## Örnekler
 
 | Dosya | Açıklama |
